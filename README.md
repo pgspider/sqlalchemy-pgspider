@@ -1,10 +1,10 @@
-# sqlalchemy-pgspider-sample
+# sqlalchemy-pgspider
 
-I have confirmed that it works with Python3.10.8.
+PGSpider dialect for SQLAlchemy
 
 When running in a virtual environment, do the following
 ```
-python3 -m venv
+python3 -m venv venv
 source venv/bin/activate 
 ```
 
