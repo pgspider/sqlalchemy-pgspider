@@ -1,11 +1,10 @@
 import re
-
 from sqlalchemy.dialects.postgresql.psycopg2 import PGDialect_psycopg2
 
 
 class PGSpiderDialect_psycopg2(PGDialect_psycopg2):
-    supports_statement_cache=True
-    
+    supports_statement_cache = True
+
     def _get_server_version_info(self, connection):
         v = connection.exec_driver_sql("select pg_catalog.version()").scalar()
         m = re.match(
