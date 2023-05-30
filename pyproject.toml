@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "sqlalchemy-pgspider"
+version = "0.1.0beta"
+description = "PGSpider Dialect for SQLAlchemy"
+authors = ["Megumi Aikawa <megumi.aikawa@gmail.com>", "Pham Ngoc Son <son1.phamngoc@toshiba.co.jp>" ]
+readme = "README.md"
+packages = [{include = "sqlalchemy_pgspider"}]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "1.4.27"
+psycopg2 = "^2.9.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.plugins."sqlalchemy.dialects"]
+"pgspider" = "sqlalchemy_pgspider.psycopg2:PGSpiderDialect_psycopg2"
+"pgspider.psycopg2" = "sqlalchemy_pgspider.psycopg2:PGSpiderDialect_psycopg2"
