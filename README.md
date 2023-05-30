@@ -14,12 +14,13 @@ sqlalchemy-pgspider inherits PostgreSQL Dialect and overrides the part that chec
 
 The code here has been tested in the following environments.
 
-* SQLALchemy 1.4.28 
+* SQLALchemy 1.4.27 or 1.4.28 
 * psycopg2 2.9.3
 * Python 3.10.8
 * pytest 7.2.2
 
-It has been confirmed that almost all features supported by PostgreSQL's psycopg2 are available in SQLAlchemy 1.4.28.
+Almost all features supported by PostgreSQL's psycopg2 in SQLAlchemy 1.4.28 are available.  
+Other versions have not been tested.
 
 ## Installation
 
