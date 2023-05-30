@@ -75,5 +75,5 @@ See test file [tests/test_create_engine.py](tests/test_create_engine.py)
 
 ### Procedure
 
-1. Change conftest.py as appropriate
+1. Change [conftest.py](tests/conftest.py) as appropriate
 2. Run pytest
