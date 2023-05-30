@@ -1,4 +1,15 @@
+# sqlalchemy-pgspider/psycopg2.py
+# Copyright (C) 2023 Toshiba Corporation
+#
+# This module is for connecting to PGSpider with SQLAlchemy.
+# SQLAlchemy: https://www.sqlalchemy.org/
+# It is a subclass of PostgresDialcet and most of its functionality is 
+# implemented in the parent class.
+# 
+# the MIT License: https://www.opensource.org/licenses/mit-license.php
+
 import re
+
 from sqlalchemy.dialects.postgresql.psycopg2 import PGDialect_psycopg2
 
 
