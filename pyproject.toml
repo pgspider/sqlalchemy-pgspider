@@ -2,7 +2,7 @@
 name = "sqlalchemy-pgspider"
 version = "0.1.0"
 description = "PGSpider Dialect for SQLAlchemy"
-authors = [ "TOSHIBA Corporation <p-db@swc.toshiba.co.jp>" ]
+authors = [ "TOSHIBA Corporation" ]
 readme = "README.md"
 packages = [{include = "sqlalchemy_pgspider"}]
 license = "MIT"
