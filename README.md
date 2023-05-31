@@ -43,14 +43,14 @@ pip install git+https://github.com/pgspider/sqlalchemy-pgspider
 To connect to PGSpider with SQLAlchemy, the following URL pattern can be used:
 
 ```
-pgspider://<username>:<password>@/<dbname>?host=<host>&port=<port>
+pgspider+psycopg2://<username>:<password>@/<dbname>?host=<host>&port=<port>
 ```
 
-Instead of the `pgspider:` protocol, you can also use `pgspier+psycopg2:`.  
+Instead of the `pgspier+psycopg2:`, you can also use `pgspider:`.  
 The behaviour is the same whichever you use.
 
 ```
-pgspider+psycopg2://<username>:<password>@/<dbname>?host=<host>&port=<port>
+pgspider://<username>:<password>@/<dbname>?host=<host>&port=<port>
 ```
 
 For more detailed usage, see the SQLAlchemy PostgreSQL psycopg2 documentation.  
@@ -64,11 +64,39 @@ Just change the protocol part of the URL pattern in the documentation from `post
 ## Sample code for use cases.
 
 ```python
-engine = create_engine("pgspider://user:pass@/dbname?host=localhost&port=4813")
+from sqlalchemy import create_engine, select
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
-with engine.begin() as connection:
-    connection.execute(text("CREATE TABLE some_table (x int, y int)"))
-    connection.execute(text("INSERT INTO some_table (x, y) VALUES (:x, :y)"),[{"x": 1, "y": 1}, {"x": 2, "y": 4}])
+
+class Base(DeclarativeBase):
+    pass
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str]
+    
+    def __repr__(self) -> str:
+        return f"User(id={self.id!r}, name={self.name!r})"
+
+engine = create_engine("pgspider://pgspider:pgspider@/pgspiderdb?host=localhost&port=48131")
+Base.metadata.create_all(engine)
+
+with Session(engine) as session:
+    bea = User(name="Bea")
+    eddy = User(name="Eddy")
+    lily = User(name="Lily")
+    session.add_all([bea, eddy, lily])
+    session.commit()
+
+session = Session(engine)
+stmt = select(User).where(User.name=="Lily")
+for user in session.scalars(stmt):
+    print(user)
+session.close()
+    
+Base.metadata.drop_all(engine)
 ```
 
 ## Testing 
