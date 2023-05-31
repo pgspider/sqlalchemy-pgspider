@@ -1,6 +1,6 @@
 # sqlalchemy-pgspider
 
-A SQLAlchemy dialect for [PGSpider](https://github.com/pgspider/pgspider).
+A [SQLAlchemy](https://www.sqlalchemy.org/) Dialect for [PGSpider](https://github.com/pgspider/pgspider).
 
 ## Overview
 
@@ -10,14 +10,14 @@ SQLAlchemy PostgreSQL Dialect uses the string obtained from pg_catalog.version()
 
 sqlalchemy-pgspider inherits PostgreSQL Dialect and overrides the part that checks version information, so that it can connect to PGSpider while retaining PostgreSQL Dialect functionality.
 
-## System Requirements
+> **note**  
+> Only psycopg2 DBAPI is supported.
 
-The code here has been tested in the following environments.
+## Requirements
 
-* SQLALchemy 1.4.27 or 1.4.28 
-* psycopg2 2.9.3
-* Python 3.10.8
-* pytest 7.2.2
+* SQLALchemy 1.4.27 or higher 
+* psycopg2 (or psycopg2-binary) 2.9.0 or higher
+* Python 3.8 or higher
 
 Almost all features supported by PostgreSQL's psycopg2 in SQLAlchemy 1.4.28 are available.  
 Other versions have not been tested.
@@ -61,20 +61,24 @@ Just change the protocol part of the URL pattern in the documentation from `post
 > https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2  
 
 
+## Sample code for use cases.
 
-## Basic Example
+```python
+engine = create_engine("pgspider://user:pass@/dbname?host=localhost&port=4813")
 
-See test file [tests/test_create_engine.py](tests/test_create_engine.py)
-
+with engine.begin() as connection:
+    connection.execute(text("CREATE TABLE some_table (x int, y int)"))
+    connection.execute(text("INSERT INTO some_table (x, y) VALUES (:x, :y)"),[{"x": 1, "y": 1}, {"x": 2, "y": 4}])
+```
 
 ## Testing 
 
 ### Requirements
 
 * A PGSpider instance up and running
-* pytest >= 6.2.1 installed on the testing machine
+* pytest >= 7.1.1 installed on the testing machine
 
 ### Procedure
 
-1. Change [conftest.py](tests/conftest.py) as appropriate
+1. Change [tests/conftest.py](tests/conftest.py) as appropriate
 2. Run pytest

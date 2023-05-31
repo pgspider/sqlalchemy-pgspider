@@ -1,16 +1,20 @@
 [tool.poetry]
 name = "sqlalchemy-pgspider"
-version = "0.1.0beta"
+version = "0.1.0"
 description = "PGSpider Dialect for SQLAlchemy"
-authors = ["Megumi Aikawa <megumi.aikawa@gmail.com>", "Pham Ngoc Son <son1.phamngoc@toshiba.co.jp>" ]
+authors = [ "TOSHIBA Corporation <p-db@swc.toshiba.co.jp>" ]
 readme = "README.md"
 packages = [{include = "sqlalchemy_pgspider"}]
 license = "MIT"
+repository = "https://github.com/pgspider/sqlalchemy-pgspider"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-sqlalchemy = "1.4.27"
-psycopg2 = "^2.9.6"
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.1.1"
+sqlalchemy = "^1.4.27"
+psycopg2-binary = "^2.9.0"
 
 [build-system]
 requires = ["poetry-core"]

@@ -21,7 +21,7 @@
 
 from sqlalchemy.dialects import registry
 
-__version__ = "0.1.0.beta"
+__version__ = "0.1.0"
 
 registry.register("pgspider", "sqlalchemy_pgspider.psycopg2", "PGSpiderDialect_psycopg2")
 registry.register("pgspider.psycopg2", "sqlalchemy_pgspider.psycopg2", "PGSpiderDialect_psycopg2")
