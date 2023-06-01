@@ -56,6 +56,9 @@ pgspider://<username>:<password>@<host>:<host>/<dbname>
 For more detailed usage, see the SQLAlchemy PostgreSQL psycopg2 documentation.  
 Just change the protocol part of the URL pattern in the documentation from `postgresql+psycopg2` to `pgspider`(or `pgspider+psycopg2`) to work.
 
+> **See Also:**  
+> SQLAlchemy 1.4 Documentation Dialects PostgreSQL  
+> https://docs.sqlalchemy.org/en/14/dialects/postgresql.html
 
 
 ## Sample code
@@ -94,5 +97,6 @@ Although not included in the sample code, the SQLAlchemy ORM can also be used.
 
 ### Procedure
 
-1. Change [tests/conftest.py](tests/conftest.py) as appropriate
-2. Run pytest
+1. Clone this repository
+2. Change [tests/conftest.py](tests/conftest.py) as appropriate
+3. Run pytest
