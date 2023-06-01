@@ -9,6 +9,6 @@ def settings():
         "DBHOST": "localhost",
         "DBPORT": 4813,
         "DBUSER": "pgspider",
-        "DBPASS": "pgspider",
+        "DBPASS": "password",
         "DBNAME": "pgspiderdb",
     }
