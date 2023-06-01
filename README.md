@@ -16,8 +16,8 @@ sqlalchemy-pgspider inherits PostgreSQL Dialect and overrides the part that chec
 ## Requirements
 
 * SQLALchemy 1.4.27 or higher 
-* psycopg2 (or psycopg2-binary) 2.9.0 or higher
-* Python 3.8 or higher
+* psycopg2 (or psycopg2-binary) 2.9 or higher
+* Python 3.7 or higher
 
 Almost all features supported by PostgreSQL's psycopg2 in SQLAlchemy 1.4.28 are available.  
 Other versions have not been tested.
