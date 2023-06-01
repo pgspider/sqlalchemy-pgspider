@@ -54,7 +54,7 @@ pgspider://<username>:<password>@<host>:<host>/<dbname>
 ```
 
 For more detailed usage, see the SQLAlchemy PostgreSQL psycopg2 documentation.  
-Just change the protocol part of the URL pattern in the documentation from `postgresql+psycopg2` to `pgspider`(or `pgspider+psycopg2`) to work.
+Just change the drivername part of the URL pattern in the documentation from `postgresql+psycopg2` to `pgspider+psycopg2`(or `pgspider`) to work.
 
 > **See Also:**  
 > SQLAlchemy 1.4 Documentation Dialects PostgreSQL  
