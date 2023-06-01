@@ -80,7 +80,7 @@ class User(Base):
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, name={self.name!r})"
 
-engine = create_engine("pgspider://pgspider:pgspider@/pgspiderdb?host=localhost&port=48131")
+engine = create_engine("pgspider://pgspider:pgspider@/pgspiderdb?host=localhost&port=4813")
 Base.metadata.create_all(engine)
 
 with Session(engine) as session:
