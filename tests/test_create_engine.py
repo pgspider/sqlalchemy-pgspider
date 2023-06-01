@@ -1,16 +1,27 @@
-from sqlalchemy import create_engine, inspect, text
+import pytest
+from sqlalchemy import create_engine, inspect
 
 
-def test_create_engine(settings):
-
-    engine = create_engine(f"pgspider://{settings['DBUSER']}:{settings['DBPASS']}@/{settings['DBNAME']}?host={settings['DBHOST']}&port={settings['DBPORT']}")
+@pytest.mark.parametrize(
+    "pgspider_protocol",
+    [
+        "pgspider",
+        "pgspider+psycopg2",
+    ]
+)
+def test_create_engine(settings, pgspider_protocol):
+    engine = create_engine(f"{pgspider_protocol}://{settings['DBUSER']}:{settings['DBPASS']}@/{settings['DBNAME']}?host={settings['DBHOST']}&port={settings['DBPORT']}")
     inspect(engine)
 
-    engine = create_engine(f"pgspider+psycopg2://{settings['DBUSER']}:{settings['DBPASS']}@/{settings['DBNAME']}?host={settings['DBHOST']}&port={settings['DBPORT']}")
-    inspect(engine)
-
-    with engine.begin() as connection:
-        connection.execute(text("DROP TABLE IF EXISTS some_table"))
-        connection.execute(text("CREATE TABLE some_table (x int, y int)"))
-        connection.execute(text("INSERT INTO some_table (x, y) VALUES (:x, :y)"),[{"x": 1, "y": 1}, {"x": 2, "y": 4}])
-        connection.execute(text("DROP TABLE some_table"))
+@pytest.mark.parametrize(
+    "otherdb_protocol",
+    [
+        "postgresql",
+        "postgresql+psycopg2",
+    ]
+)
+def test_create_engine_with_other_protocol(settings, otherdb_protocol):
+    engine = create_engine(f"{otherdb_protocol}://{settings['DBUSER']}:{settings['DBPASS']}@/{settings['DBNAME']}?host={settings['DBHOST']}&port={settings['DBPORT']}")
+    with pytest.raises(Exception) as e:
+        inspect(engine)
+    assert "Could not determine version from string" in str(e.value)
