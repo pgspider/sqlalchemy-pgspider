@@ -57,47 +57,33 @@ For more detailed usage, see the SQLAlchemy PostgreSQL psycopg2 documentation.
 Just change the protocol part of the URL pattern in the documentation from `postgresql+psycopg2` to `pgspider`(or `pgspider+psycopg2`) to work.
 
 
-> SQLAlchemy 1.4 Documentation Dialects PostgreSQL - psycopg2  
-> https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2  
 
-
-## Sample code for use cases.
+## Sample code
 
 ```python
-from sqlalchemy import create_engine, select
-from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
+from sqlalchemy import create_engine, text
 
+engine = create_engine("pgspider+psycopg2://pgspider:password@localhost:4813/pgspiderdb")
 
-class Base(DeclarativeBase):
-    pass
+with engine.connect() as conn:
+    conn.execute(text("CREATE TABLE users (id SERIAL NOT NULL PRIMARY KEY, name text)"))
+    conn.execute(text("INSERT INTO users (name) VALUES ('Bea'), ('Eddy'), ('Lily')"))
 
-class User(Base):
-    __tablename__ = "users"
+    result = conn.execute(text("SELECT * FROM users WHERE name='Lily'"))
+    for row in result:
+       print(row)
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
-    
-    def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.name!r})"
-
-engine = create_engine("pgspider://pgspider:pgspider@/pgspiderdb?host=localhost&port=4813")
-Base.metadata.create_all(engine)
-
-with Session(engine) as session:
-    bea = User(name="Bea")
-    eddy = User(name="Eddy")
-    lily = User(name="Lily")
-    session.add_all([bea, eddy, lily])
-    session.commit()
-
-session = Session(engine)
-stmt = select(User).where(User.name=="Lily")
-for user in session.scalars(stmt):
-    print(user)
-session.close()
-    
-Base.metadata.drop_all(engine)
+    conn.execute(text("DROP TABLE users"))
 ```
+
+Running this code would output the following string.
+
+```
+(3, 'Lily')
+```
+
+Although not included in the sample code, the SQLAlchemy ORM can also be used.
+
 
 ## Testing 
 
