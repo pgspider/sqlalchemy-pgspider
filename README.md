@@ -43,14 +43,14 @@ pip install git+https://github.com/pgspider/sqlalchemy-pgspider
 To connect to PGSpider with SQLAlchemy, the following URL pattern can be used:
 
 ```
-pgspider+psycopg2://<username>:<password>@/<dbname>?host=<host>&port=<port>
+pgspider+psycopg2://<username>:<password>@<host>:<host>/<dbname>
 ```
 
 Instead of the `pgspier+psycopg2:`, you can also use `pgspider:`.  
 The behaviour is the same whichever you use.
 
 ```
-pgspider://<username>:<password>@/<dbname>?host=<host>&port=<port>
+pgspider://<username>:<password>@<host>:<host>/<dbname>
 ```
 
 For more detailed usage, see the SQLAlchemy PostgreSQL psycopg2 documentation.  
