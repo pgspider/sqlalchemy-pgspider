@@ -35,7 +35,7 @@ class PGSpiderDialect_psycopg2(PGDialect_psycopg2):
     def _get_server_version_info(self, connection):
         v = connection.exec_driver_sql("select pg_catalog.version()").scalar()
         m = re.match(
-            r".*(?:PGSpider) "
+            r".*(?:PGSpider|PostgreSQL|EnterpriseDB) "
             r"(\d+)\.?(\d+)?(?:\.(\d+))?(?:\.\d+)?(?:devel|beta)?",
             v,
         )
