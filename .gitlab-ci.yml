@@ -1,0 +1,51 @@
+image: python:3.9
+
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+# Pip's cache doesn't store the python packages
+# https://pip.pypa.io/en/stable/topics/caching/
+#
+# If you want to also cache the installed packages, you have to install
+# them in a virtualenv and cache it as well.
+cache:
+  paths:
+    - .cache/pip
+
+stages:
+  - test
+  - deploy
+
+pytest:
+  stage: test
+  services:
+    - name: swc.registry.benzaiten.toshiba.co.jp/db/pgspider-docker/pgspider:3.0.0
+      alias: pgspider
+  before_script:
+    - python --version  # For debugging
+    - pip install poetry
+    - poetry install
+    - source `poetry env info --path`/bin/activate
+  script:
+    - poetry install
+    - poetry run pytest --cov=sqlalchemy_pgspider --cov-report term --cov-report=html
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    paths: 
+      - htmlcov/
+  tags:
+    - swc-docker
+
+pages:
+  stage: deploy
+  dependencies:
+    - pytest
+  script:
+    - mv htmlcov/ public/
+  artifacts:
+    paths:
+      - public/
+  tags:
+    - swc-docker

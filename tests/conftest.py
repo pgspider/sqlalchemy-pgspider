@@ -4,9 +4,9 @@ import pytest
 @pytest.fixture(scope="session")
 def settings():
     return {
-        "DBHOST": "localhost",
+        "DBHOST": "pgspider",
         "DBPORT": 4813,
         "DBUSER": "pgspider",
-        "DBPASS": "password",
+        "DBPASS": "pgspider",
         "DBNAME": "pgspiderdb",
     }
