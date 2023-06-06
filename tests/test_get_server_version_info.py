@@ -23,3 +23,17 @@ def conn(str):
 )
 def test_get_server_version_info(pgspider_ver_str, result):
     assert PGSpiderDialect_psycopg2._get_server_version_info(None, conn(pgspider_ver_str)) == result
+
+
+@pytest.mark.parametrize(
+    "non_pgspider_ver_str",
+    [
+        "mysql  Ver 14.14 Distrib 5.7.25, for Linux (x86_64) using  EditLine wrapper",
+        "mysql  Ver 15.1 Distrib 10.5.8-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2",
+    ]
+)
+def test_get_server_version_info_err(non_pgspider_ver_str):
+    with pytest.raises(Exception) as e:
+        _ = PGSpiderDialect_psycopg2._get_server_version_info(None, conn(non_pgspider_ver_str))
+
+    assert "Could not determine version from string" in str(e.value)
